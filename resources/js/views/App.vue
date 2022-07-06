@@ -1,6 +1,8 @@
 <template>
     <div>
-        <h1>App Vue front office</h1>
+        <div class="container text-center my-5">
+          <h1>App Vue front office</h1>
+        </div>
         <WorkInProgress />
     </div>
 </template>

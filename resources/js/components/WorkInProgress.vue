@@ -1,6 +1,9 @@
 <template>
   <div>
-    This page is under maintenance
+    <div class="container">
+      <h2>This page is under maintenance</h2>
+      <h3>Try later</h3>
+    </div>
   </div>
 </template>
 

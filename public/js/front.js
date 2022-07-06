@@ -1949,10 +1949,17 @@ var render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _c("div", [_vm._v("\r\n    This page is under maintenance\r\n  ")]);
+  return _vm._m(0);
 };
 
-var staticRenderFns = [];
+var staticRenderFns = [function () {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("div", [_c("div", {
+    staticClass: "container"
+  }, [_c("h2", [_vm._v("This page is under maintenance")]), _vm._v(" "), _c("h3", [_vm._v("Try later")])])]);
+}];
 render._withStripped = true;
 
 
@@ -1973,10 +1980,17 @@ var render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _c("div", [_c("h1", [_vm._v("App Vue front office")]), _vm._v(" "), _c("WorkInProgress")], 1);
+  return _c("div", [_vm._m(0), _vm._v(" "), _c("WorkInProgress")], 1);
 };
 
-var staticRenderFns = [];
+var staticRenderFns = [function () {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("div", {
+    staticClass: "container text-center my-5"
+  }, [_c("h1", [_vm._v("App Vue front office")])]);
+}];
 render._withStripped = true;
 
 
