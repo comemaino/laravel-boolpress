@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('content')
-	<h1>pagina create</h1>
+	<h1>Edit your post</h1>
 
 	@if ($errors->any())
 		<div class="alert alert-danger">
@@ -19,15 +19,13 @@
 
 		<div class="form-group">
 			<label for="title">Title</label>
-			<input type="title" class="form-control" id="title" aria-describedby="title" placeholder="Title"
-				value="{{ $post->title }}">
+			<input type="text" name='title' class="form-control" id="title"
+				value="{{ old('title') ? old('title') : $post->title }}">
 		</div>
 		<div class="form-group">
-			<label for="title">Content</label>
-			<textarea type="content" class="form-control" id="content" rows='10' aria-describedby="content"
-			 placeholder="Your content here">
-				{{ $post->content }}
-      </textarea>
+			<label for="content">Content</label>
+			<textarea type="text" name='content' class="form-control" id="content" rows="10">
+				{{ old('content') ? old('content') : $post->content }} </textarea>
 		</div>
 		<button type="submit" class="btn btn-primary">Submit</button>
 	</form>

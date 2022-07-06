@@ -83,6 +83,15 @@ class PostController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate($this->getValidationRules());
+
+        $data = $request->all();
+
+        $post = Post::findOrFail($id);
+        $post->fill($data);
+        $post->slug = $this->generateSlug($post->title);
+        $post->save();
+
+        return redirect()->route('admin.posts.show', ['post' => $post->id]);
     }
 
     /**
