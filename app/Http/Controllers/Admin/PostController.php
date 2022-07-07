@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Category;
 use App\Http\Controllers\Controller;
 use App\Post;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
+
 
 class PostController extends Controller
 {
@@ -27,7 +28,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('admin.posts.create');
+        $categories = Category::all();
+        return view('admin.posts.create', compact('categories'));
     }
 
     /**
@@ -43,7 +45,7 @@ class PostController extends Controller
         $data = $request->all();
         $post = new Post();
         $post->fill($data);
-        $post->slug = $this->generateSlug($post->title);
+        $post->slug = Post::generateSlug($post->title);
         $post->save();
 
         return redirect()->route('admin.posts.show', ['post' => $post->id]);
@@ -58,6 +60,9 @@ class PostController extends Controller
     public function show($id)
     {
         $post = Post::findOrFail($id);
+
+        $category = $post->category;
+        $categoriesPosts = $category->posts;
         return view('admin.posts.show', compact('post'));
     }
 
@@ -87,9 +92,15 @@ class PostController extends Controller
         $data = $request->all();
 
         $post = Post::findOrFail($id);
-        $post->fill($data);
-        $post->slug = $this->generateSlug($post->title);
-        $post->save();
+
+        //Metodo fill + save
+        // $post->fill($data);
+        // $post->slug = Post::generateSlug($post->title);
+        // $post->save();
+
+        //Metodo update
+        $data['slug'] = Post::generateSlug($data['title']);
+        $post->update($data);
 
         return redirect()->route('admin.posts.show', ['post' => $post->id]);
     }
@@ -108,20 +119,7 @@ class PostController extends Controller
         return redirect()->route('admin.posts.index');
     }
 
-    private function generateSlug($title)
-    {
-        $init_slug = Str::slug($title, '-');
-        $slug = $init_slug;
-        $count = 1;
-        $post_found = Post::where('slug', $slug)->first();
-        while ($post_found) {
-            $slug = $init_slug . '-' . $count;
-            $post_found = Post::where('slug', $slug)->first();
-            $count++;
-        }
 
-        return $slug;
-    }
 
     private function getValidationRules()
     {
