@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Category;
 use App\Http\Controllers\Controller;
+use App\Post;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -17,6 +18,8 @@ class CategoryController extends Controller
     public function show($slug)
     {
         $category = Category::where('slug', '=', $slug)->first();
-        return view('admin.categories.show', compact('category'));
+        // $posts = Post::where('category', '=', $category)->first();
+        $posts = Post::all();
+        return view('admin.categories.show', compact('category', 'posts'));
     }
 }
