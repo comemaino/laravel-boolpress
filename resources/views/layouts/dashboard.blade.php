@@ -65,6 +65,12 @@
 								Crea post
 							</a>
 						</li>
+						<li class="nav-item">
+							<a class="nav-link active" href="{{ route('admin.categories.index') }}">
+								<i class="fa-solid fa-square-plus"></i>
+								Categories
+							</a>
+						</li>
 
 						{{-- <li class="nav-item">
                             <a class="nav-link" href="">
