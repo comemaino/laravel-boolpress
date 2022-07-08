@@ -21,15 +21,29 @@
 			<label for="title">Title</label>
 			<input type="text" name='title' class="form-control" id="title" value="{{ old('title') }}">
 		</div>
+
 		<div class="form-group">
-			<label for="category">Category</label>
-			<select name='category_id' class="form-control" id="category_id">
+			<label for="category_id">Category</label>
+			<select class="form-control" name="category_id" id="category_id">
 				<option value="">None</option>
 				@foreach ($categories as $category)
-					<option value="{{ $category->id }}">{{ $category->name }}</option>
+					<option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
+						{{ $category->name }}</option>
 				@endforeach
 			</select>
 		</div>
+
+		<h5>Tags</h5>
+		@foreach ($tags as $tag)
+			<div class="form-check">
+				<input name="tags[]" class="form-check-input" type="checkbox" value="{{ $tag->id }}"
+					id="tag-{{ $tag->id }}" {{ in_array($tag->id, old('tags', [])) ? 'checked' : '' }}>
+				<label class="form-check-label" for="tag-{{ $tag->id }}">
+					{{ $tag->name }}
+				</label>
+			</div>
+		@endforeach
+
 		<div class="form-group">
 			<label for="content">Content</label>
 			<textarea type="text" name='content' class="form-control" id="content">
