@@ -4,6 +4,13 @@
 	<h1>{{ $post->title }}</h1>
 	<p>{{ $post->slug }}</p>
 	<p>Category: {{ $category ? $category->name : 'none' }}</p>
+	<p>Tags:
+		@forelse ($post->tags as $tag)
+			{{ $tag->name }}{{ $loop->last ? '' : ', ' }}
+		@empty
+			none
+		@endforelse
+	</p>
 	<p>{{ $post->content }}</p>
 
 	<a href="{{ route('admin.posts.edit', ['post' => $post->id]) }}">Edit</a>

@@ -110,6 +110,12 @@ class PostController extends Controller
         $data['slug'] = Post::generateSlug($data['title']);
         $post->update($data);
 
+        if (isset($data['tags'])) {
+            $post->tags()->sync($data['tags']);
+        } else {
+            $post->tags()->sync([]);
+        }
+
         return redirect()->route('admin.posts.show', ['post' => $post->id]);
     }
 
