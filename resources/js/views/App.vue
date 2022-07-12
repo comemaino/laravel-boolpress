@@ -3,16 +3,16 @@
         <div class="container text-center my-5">
           <h1>App Vue front office</h1>
         </div>
-        <WorkInProgress />
+        <Posts />
     </div>
 </template>
 
 <script>
-import WorkInProgress from '../components/WorkInProgress.vue';
+import Posts from '../components/Posts.vue';
 export default {
     name: 'App',
     components: {
-        WorkInProgress
+        Posts
     }
 }
 </script>

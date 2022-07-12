@@ -6,6 +6,7 @@ use App\Category;
 use App\Http\Controllers\Controller;
 use App\Post;
 use App\Tag;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 
@@ -19,7 +20,8 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::all();
-        return view('admin.posts.index', compact('posts'));
+        $categories = Category::all();
+        return view('admin.posts.index', compact('posts', 'categories'));
     }
 
     /**
@@ -65,7 +67,12 @@ class PostController extends Controller
      */
     public function show($id)
     {
+        $now = new Carbon();
+        // $now = Carbon::now();
+        // dd($now);
         $post = Post::findOrFail($id);
+        $updated_mins_ago = $post->updated_at->diffInMinutes($now);
+        // dd($updated_mins_ago);
 
         $category = $post->category;
         // dd($post->tags);

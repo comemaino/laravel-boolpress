@@ -62,12 +62,12 @@
 						<li class="nav-item">
 							<a class="nav-link active" href="{{ route('admin.posts.create') }}">
 								<i class="fa-solid fa-square-plus"></i>
-								Crea post
+								New post
 							</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link active" href="{{ route('admin.categories.index') }}">
-								<i class="fa-solid fa-square-plus"></i>
+								<i class="fa-solid fa-grip"></i>
 								Categories
 							</a>
 						</li>

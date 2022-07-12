@@ -3,6 +3,8 @@
 @section('content')
 	<h1>{{ $post->title }}</h1>
 	<p>{{ $post->slug }}</p>
+	<p>{{ $post->created_at->format('d F Y - H:i') }}</p>
+	{{-- <p>Modified: {{ $updated_mins_ago < 60 ? $updated_mins_ago : $post->updated_at->format('d F Y - H:i') }}</p> --}}
 	<p>Category: <a href="{{ route('admin.categories.show', ['slug' => $category->slug]) }}">{{ $category->name }}</a>
 	</p>
 	<p>Tags:
