@@ -1932,7 +1932,7 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (resp) {
         _this.posts = resp.data.results.data;
         _this.currentPage = resp.data.results.current_page;
-        _this.lastPage = resp.data.results;
+        _this.lastPage = resp.data.results.last_page;
         _this.totalPosts = resp.data.results.total;
       });
     },
@@ -1994,9 +1994,60 @@ var render = function render() {
       key: post.id,
       staticClass: "col"
     }, [_c("div", {
-      staticClass: "card p-2 mb-3"
+      staticClass: "card p-4 mb-3"
     }, [_c("h4", [_vm._v(_vm._s(post.title))]), _vm._v(" "), _c("p", [_vm._v(_vm._s(_vm.troncateText(post.content, 50)))])])]);
-  }), 0)]);
+  }), 0), _vm._v(" "), _c("nav", [_c("ul", {
+    staticClass: "pagination"
+  }, [_c("li", {
+    staticClass: "page-item",
+    "class": {
+      disabled: _vm.currentPage === 1
+    }
+  }, [_c("a", {
+    staticClass: "page-link",
+    attrs: {
+      href: "#",
+      tabindex: "-1"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.getPosts(_vm.currentPage - 1);
+      }
+    }
+  }, [_vm._v("\r\n          Previous")])]), _vm._v(" "), _vm._l(_vm.lastPage, function (n) {
+    return _c("li", {
+      key: n,
+      staticClass: "page-item",
+      "class": {
+        active: _vm.currentPage === n
+      }
+    }, [_c("a", {
+      staticClass: "page-link",
+      attrs: {
+        href: "#"
+      },
+      on: {
+        click: function click($event) {
+          return _vm.getPosts(n);
+        }
+      }
+    }, [_vm._v(_vm._s(n))])]);
+  }), _vm._v(" "), _c("li", {
+    staticClass: "page-item",
+    "class": {
+      disabled: _vm.currentPage === _vm.lastPage
+    }
+  }, [_c("a", {
+    staticClass: "page-link",
+    attrs: {
+      href: "#"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.getPosts(_vm.currentPage + 1);
+      }
+    }
+  }, [_vm._v("\r\n            Next\r\n          ")])])], 2)])]);
 };
 
 var staticRenderFns = [];

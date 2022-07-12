@@ -3,12 +3,39 @@
     <h2 class="mt-5">Posts</h2>
     <div class="row row-cols-3">
       <div v-for="post in posts" :key="post.id" class="col">
-        <div class="card p-2 mb-3">
+        <div class="card p-4 mb-3">
           <h4>{{post.title}}</h4>
           <p>{{troncateText(post.content, 50)}}</p>
         </div>
       </div>
     </div>
+    <nav>
+      <ul class="pagination">
+        <!-- PREVIOUS -->
+        <li class="page-item" :class="{disabled: currentPage === 1}">
+          <a href="#"
+          @click="getPosts(currentPage - 1)"
+          class="page-link"
+          tabindex="-1">
+          Previous</a>
+        </li>
+        <!-- PAGE NUMBERS -->
+        <li v-for="n in lastPage" :key="n"
+        class="page-item" :class="{active: currentPage === n}">
+          <a href="#"
+          class="page-link"
+          @click="getPosts(n)">{{n}}</a>
+        </li>
+        <!-- NEXT -->
+        <li class="page-item" :class="{disabled: currentPage === lastPage}">
+          <a href="#" 
+          class="page-link"
+          @click="getPosts(currentPage + 1)">
+            Next
+          </a>
+        </li>
+      </ul>
+    </nav>
   </div>
 </template>
 
@@ -37,7 +64,7 @@ export default {
       }).then((resp) => {
         this.posts = resp.data.results.data;
         this.currentPage = resp.data.results.current_page;
-        this.lastPage = resp.data.results;
+        this.lastPage = resp.data.results.last_page;
         this.totalPosts = resp.data.results.total
       });
      
