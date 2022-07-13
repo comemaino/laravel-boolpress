@@ -1,6 +1,14 @@
 <template>
   <div class="container">
     <h2 class="mt-5">Posts</h2>
+    <div class="form-group">
+      <label for="items_per_page"></label>
+      <select class="form-select" name="" id="items_per_page" v-model='itemsPerPage' @change="getPosts(1)">
+        <option value="3">3</option>
+        <option value="6">6</option>
+        <option value="9">9</option>
+      </select>
+    </div>
     <div class="row row-cols-3">
       <div v-for="post in posts" :key="post.id" class="col">
         <div class="card p-4 mb-3">
@@ -47,7 +55,8 @@ export default {
       posts: [],
       currentPage: 1,
       lastPage: 0,
-      totalPosts: 0
+      totalPosts: 0,
+      itemsPerPage: 6,
     }
   },
 
@@ -59,7 +68,8 @@ export default {
     getPosts(pageNumber) {
       axios.get("/api/posts", {
         params: {
-          page: pageNumber
+          page: pageNumber,
+          items_per_page: this.itemsPerPage,
         }
       }).then((resp) => {
         this.posts = resp.data.results.data;

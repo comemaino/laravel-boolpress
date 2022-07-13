@@ -1,0 +1,80 @@
+
+
+1. Inizializzare il progetto
+composer create-project --prefer-dist laravel/laravel:^7.0 blog
+
+2. Push su github
+
+3. Creare il database nel phpMyAdmin
+
+4. Modificare file .env
+
+5. Riavviare (oppure far partire) php artisan serve;
+
+6. Creo la migration per la tabella
+
+php artisan make:migration create_nometabella_table
+
+aggiungere tutti i campi della tabella all'interno della funzione up della migration
+
+php artisan migrate -> per creare la tabella all'interno del database
+
+controllo in phpMyAdmin che la tabella è stata veramente creata.
+
+7. Creo model
+
+php artisan make:model NomeModel (come tabella ma al singolare)
+
+8. Creo seeder
+
+php artisan make:seeder NometabellaTableSeeder
+
+Cancello il faker di f.zaninotto e inserisco quello di phpfaker 
+composer remove fzaninotto/faker
+composer require fakerphp/faker
+
+Importo Faker nel seeder: 
+use Faker\Generator as Faker;
+
+E lo inserisco anche come un parametro della funzione run
+
+Scrivo il codice del seeder nella funzione run per creare i record.
+
+Eseguo il seeder:
+php artisan db:seed --class=NomeClasseSeeder
+
+Controllo ne phpMyAdmin che ci sono i record all'interno della tabella
+
+9. Creare controller resource
+php artisan make:controller --resource NomeController
+
+10. Creare la route con resource
+Route::resource('nomeTabella', 'NomeController');
+Controllare le rotte con :
+php artisan route:list
+
+11. Implementare una funzione alla volta
+
+
+12. Per inserire lo stile fare: 
+npm install
+npm run watch
+
+Per bootstrap: 
+npm install bootstrap@5
+nel file resources/sass/app.scss inserire:
+@import '~bootstrap/scss/bootstrap';
+
+
+FRONT OFFICE
+
+1. Inserire le rotte api inb Api.php
+  Route::get('/posts', 'Api\PostController@index)->name('api.posts.index);
+
+2. Creare controller Api in cartella Api
+  $posts = Post::all();
+  return response()->json([
+    'seccess' =>true,
+    'reutrns' => $posts]);
+
+3. creare vue.js component Posts.vue

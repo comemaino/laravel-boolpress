@@ -1,18 +1,18 @@
 <template>
     <div>
-        <div class="container text-center my-5">
-          <h1>App Vue front office</h1>
-        </div>
-        <Posts />
+        <Header />
+        <router-view></router-view>
+        
     </div>
 </template>
 
 <script>
-import Posts from '../components/Posts.vue';
+import Header from "../components/Header.vue";
+// import Posts from '../components/Posts.vue';
 export default {
     name: 'App',
     components: {
-        Posts
+        Header
     }
 }
 </script>
