@@ -11,10 +11,7 @@
     </div>
     <div class="row row-cols-3">
       <div v-for="post in posts" :key="post.id" class="col">
-        <div class="card p-4 mb-3">
-          <h4>{{post.title}}</h4>
-          <p>{{troncateText(post.content, 50)}}</p>
-        </div>
+        <PostCard :post="post"/>
       </div>
     </div>
     <nav>
@@ -48,8 +45,12 @@
 </template>
 
 <script>
+import PostCard from "../components/PostCard.vue"
 export default {
   name: 'Posts',
+  components: {
+    PostCard
+  },
   data() {
     return {
       posts: [],
@@ -79,13 +80,6 @@ export default {
       });
      
     },
-
-    troncateText(text, maxCharNumber) {
-      if (text.length > maxCharNumber) {
-        return text.substr(0, maxCharNumber) + '...';
-      }
-      return text;
-    }
   }
 }
 </script>
