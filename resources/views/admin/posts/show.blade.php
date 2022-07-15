@@ -2,6 +2,9 @@
 
 @section('content')
 	<h1>{{ $post->title }}</h1>
+	@if ($post->cover)
+		<img src="{{ asset('storage/' . $post->cover) }}" alt="">
+	@endif
 	<p>{{ $post->slug }}</p>
 	<p>{{ $post->created_at->format('d F Y - H:i') }}</p>
 	{{-- <p>Modified: {{ $updated_mins_ago < 60 ? $updated_mins_ago : $post->updated_at->format('d F Y - H:i') }}</p> --}}

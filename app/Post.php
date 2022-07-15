@@ -11,6 +11,7 @@ class Post extends Model
     use SoftDeletes;
     protected $fillable = [
         'title',
+        'cover',
         'slug',
         'content',
         'category_id',

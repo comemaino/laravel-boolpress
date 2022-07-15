@@ -9,6 +9,9 @@
 				<div class="card-body">
 					<h5 class="card-title">{{ $post->title }}</h5>
 					{{-- <p>{{ dd($post->category) }}<a href="">{{ $post->category['name'] }}</a> --}}
+					@if ($post->cover)
+						<img src="{{ asset('storage/' . $post->cover) }}" alt="">
+					@endif
 					</p>
 					<p class="card-text">{{ Str::limit($post->content, 100) }}
 					</p>

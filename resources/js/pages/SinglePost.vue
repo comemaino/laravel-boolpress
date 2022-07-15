@@ -1,60 +1,64 @@
 <template>
-  <div class="container">
-    <section v-if="post">
-      <h2>{{ post.title }}</h2>
-      <p>{{ categoryName }}</p>
-      <div class="mb-2">
-        <span
-          v-for="tag in post.tags"
-          :key="tag.id"
-          >{{ tag.name }}</span
-        >
-      </div>
-      <p>
-        {{ post.content }}
-      </p>
-    </section>
-    <section v-else>
-        <h2>Loading...</h2>
-    </section>
-  </div>
+    <div class="container">
+        <section v-if="post">
+            <h2>{{ post.title }}</h2>
+            <p>{{ categoryName }}</p>
+            <div v-if="post.cover">
+                <img :src="post.cover" alt="" />
+            </div>
+            <div class="mb-2">
+                <router-link
+                    :to="{ name: 'single-tag', params: { slug: tag.slug } }"
+                    v-for="tag in post.tags"
+                    :key="tag.id"
+                >
+                    {{ tag.name }}
+                </router-link>
+            </div>
+            <p>
+                {{ post.content }}
+            </p>
+        </section>
+        <section v-else>
+            <h2>Loading...</h2>
+        </section>
+    </div>
 </template>
 
 <script>
 export default {
-  name: "SinglePost",
-  data() {
-    return {
-      post: null
-    }
-  },
+    name: "SinglePost",
+    data() {
+        return {
+            post: null,
+        };
+    },
 
-  created() {
-    this.getPostDetails();
-  },
+    created() {
+        this.getPostDetails();
+    },
 
-  computed: {
-    categoryName() {
-      return this.post.category ? this.post.category.name : 'none';
-    }
-  },
+    computed: {
+        categoryName() {
+            return this.post.category ? this.post.category.name : "none";
+        },
+    },
 
-  methods: {
-    getPostDetails() {
-      const slug = this.$route.params.slug;
+    methods: {
+        getPostDetails() {
+            const slug = this.$route.params.slug;
 
-      axios.get(`/api/posts/${slug}`).then((resp)=> {
-      if (resp.data.success) {
-          this.post = resp.data.results;
-        } else {
-          this.$router.push({ name: "not-found" });
-        }
-      });
-    }
-  }
-}
+            axios.get(`/api/posts/${slug}`).then((resp) => {
+                console.log(resp);
+                if (resp.data.success) {
+                    this.post = resp.data.results;
+                } else {
+                    this.$router.push({ name: "not-found" });
+                }
+            });
+        },
+    },
+};
 </script>
 
-<style>
-
-</style>
+<style></style>

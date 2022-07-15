@@ -12,6 +12,11 @@ class PostController extends Controller
     {
         $items_per_page = $request->itmes_per_page ? $request->itmes_per_page : 6;
         $posts = Post::with(['category', 'tags'])->paginate($request->items_per_page);
+        foreach ($posts as $post) {
+            if ($post->cover) {
+                $post->cover = url('storage/' . $post->cover);
+            }
+        }
         // $post_with_cat = [];
         // foreach ($posts as $post) {
         //     $category = $post->category;
@@ -29,6 +34,10 @@ class PostController extends Controller
     {
         $post = Post::where('slug', '=' . $slug)->with(['category', 'tags'])->first();
         if ($post) {
+            if ($post->cover) {
+                $post->cover = url('/storage' . $post->cover);
+            }
+
             return response()->json([
                 'success' => true,
                 'results' => $post

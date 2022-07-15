@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Category;
 use App\Http\Controllers\Controller;
+use App\Mail\NewPostNotificationToAdmin;
 use App\Post;
 use App\Tag;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -44,19 +46,26 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        //VALIDAZIONE
         $request->validate($this->getValidationRules());
-
         $data = $request->all();
+        //GESTIONESALVATAGGIO IMMAGINE
+        if (isset($data['image'])) {
+            $image_path = Storage::put('post_covers', $data['image']);
+            $data['cover'] = $image_path;
+        }
+        //CREAZIONE POST
         $post = new Post();
         $post->fill($data);
         $post->slug = Post::generateSlug($post->title);
         $post->save();
-
+        //COLLEGAMENTO TAGS
         if (isset($data['tags'])) {
             $post->tags()->sync($data['tags']);
         }
-
-        return redirect()->route('admin.posts.show', ['post' => $post->id]);
+        //EMAIL NOTIFICA
+        // Mail::to('mmaaiinnoo@gmail.com')->send(new NewPostNotificationToAdmin);
+        // return redirect()->route('admin.posts.show', ['post' => $post->id]);
     }
 
     /**
@@ -67,6 +76,7 @@ class PostController extends Controller
      */
     public function show($id)
     {
+
         $now = new Carbon();
         // $now = Carbon::now();
         // dd($now);
@@ -108,6 +118,13 @@ class PostController extends Controller
 
         $post = Post::findOrFail($id);
 
+        if (isset($data['image'])) {
+            if ($post->cover) {
+                Storage::delete($post->cover);
+            }
+            $image_path = Storage::put('post_covers', $data['image']);
+            $data['cover'] = $image_path;
+        }
         //Metodo fill + save
         // $post->fill($data);
         // $post->slug = Post::generateSlug($post->title);
@@ -135,6 +152,10 @@ class PostController extends Controller
     public function destroy($id)
     {
         $post = Post::findOrFail($id);
+
+        if ($post->cover) {
+            Storage::delete($post->cover);
+        }
         $post->delete();
 
         return redirect()->route('admin.posts.index');
@@ -149,6 +170,7 @@ class PostController extends Controller
             'content' => 'required|max:30000',
             'category_id' => 'nullable|exists:categories,id',
             'tags' => 'nullable|exists:tags,id',
+            // 'image' => 'image|max:512'
         ];
     }
 }
