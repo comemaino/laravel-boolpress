@@ -2046,17 +2046,33 @@ __webpack_require__.r(__webpack_exports__);
       email: "",
       name: "",
       message: "",
-      success: false
+      success: false,
+      errors: {},
+      loading: false
     };
   },
   methods: {
     sendContactRequest: function sendContactRequest() {
+      var _this = this;
+
+      this.errors = {};
+      this.loading = true;
       axios.post("/api/leads", {
         email: this.email,
         name: this.name,
         message: this.message
       }).then(function (resp) {
-        console.log(resp);
+        if (resp.data.success) {
+          _this.success = true;
+          _this.email = "";
+          _this.name = "";
+          _this.message = "";
+        } else {
+          _this.success = false;
+          _this.errors = resp.data.errors;
+        }
+
+        _this.loading = false;
       });
     }
   }
@@ -2219,7 +2235,16 @@ var render = function render() {
         name: "blog"
       }
     }
-  }, [_vm._v("Blog")])], 1)])])])])]);
+  }, [_vm._v("Blog")])], 1), _vm._v(" "), _c("li", {
+    staticClass: "nav-item"
+  }, [_c("router-link", {
+    staticClass: "nav-link",
+    attrs: {
+      to: {
+        name: "contacts"
+      }
+    }
+  }, [_vm._v("Contacts")])], 1)])])])])]);
 };
 
 var staticRenderFns = [function () {
@@ -2491,9 +2516,126 @@ var render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _c("div", {
+  return _c("section", {
     staticClass: "container"
-  });
+  }, [_c("h1", [_vm._v("Contact us")]), _vm._v(" "), _vm.success ? _c("div", {
+    staticClass: "alert alert-success"
+  }, [_vm._v("Message delivered")]) : _vm._e(), _vm._v(" "), _c("form", [_c("div", {
+    staticClass: "mb-2"
+  }, [_c("label", {
+    staticClass: "form-label",
+    attrs: {
+      "for": "email"
+    }
+  }, [_vm._v("Email")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.email,
+      expression: "email"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "email",
+      id: "email"
+    },
+    domProps: {
+      value: _vm.email
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.email = $event.target.value;
+      }
+    }
+  }), _vm._v(" "), _vm.errors.email ? _c("div", {
+    staticClass: "text-danger"
+  }, _vm._l(_vm.errors.email, function (errorMessage, index) {
+    return _c("p", {
+      key: index
+    }, [_vm._v("\r\n                        " + _vm._s(errorMessage) + "\r\n                    ")]);
+  }), 0) : _vm._e()]), _vm._v(" "), _c("div", {
+    staticClass: "mb-2"
+  }, [_c("label", {
+    staticClass: "form-label",
+    attrs: {
+      "for": "name"
+    }
+  }, [_vm._v("Name")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.name,
+      expression: "name"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      id: "name"
+    },
+    domProps: {
+      value: _vm.name
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.name = $event.target.value;
+      }
+    }
+  }), _vm._v(" "), _vm.errors.name ? _c("div", {
+    staticClass: "text-danger"
+  }, _vm._l(_vm.errors.name, function (errorMessage, index) {
+    return _c("p", {
+      key: index
+    }, [_vm._v("\r\n                        " + _vm._s(errorMessage) + "\r\n                    ")]);
+  }), 0) : _vm._e()]), _vm._v(" "), _c("div", {
+    staticClass: "mb-2"
+  }, [_c("label", {
+    staticClass: "form-label",
+    attrs: {
+      "for": "message"
+    }
+  }, [_vm._v("message")]), _vm._v(" "), _c("textarea", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.message,
+      expression: "message"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      id: "message",
+      rows: "4"
+    },
+    domProps: {
+      value: _vm.message
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.message = $event.target.value;
+      }
+    }
+  }), _vm._v(" "), _vm.errors.message ? _c("div", {
+    staticClass: "text-danger"
+  }, _vm._l(_vm.errors.message, function (errorMessage, index) {
+    return _c("p", {
+      key: index
+    }, [_vm._v("\r\n                        " + _vm._s(errorMessage) + "\r\n                    ")]);
+  }), 0) : _vm._e()]), _vm._v(" "), _vm.loading ? _c("div", [_vm._v("Sending your message")]) : _vm._e(), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-primary",
+    attrs: {
+      type: "submit",
+      disabled: _vm.loading
+    },
+    on: {
+      click: function click($event) {
+        $event.preventDefault();
+        return _vm.sendContactRequest.apply(null, arguments);
+      }
+    }
+  }, [_vm._v("\r\n                Submit\r\n            ")])])]);
 };
 
 var staticRenderFns = [];

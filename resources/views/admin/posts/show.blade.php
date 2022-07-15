@@ -3,7 +3,7 @@
 @section('content')
 	<h1>{{ $post->title }}</h1>
 	@if ($post->cover)
-		<img src="{{ asset('storage/' . $post->cover) }}" alt="">
+		<img src="{{ asset('storage/' . $post->cover) }}" alt="{{ $post->title }}">
 	@endif
 	<p>{{ $post->slug }}</p>
 	<p>{{ $post->created_at->format('d F Y - H:i') }}</p>

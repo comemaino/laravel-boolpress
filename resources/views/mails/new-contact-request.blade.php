@@ -9,8 +9,8 @@
 </head>
 
 <body>
-	<h1>Ciao Admin</h1>
-	<p>hai riceuto una nuova richiesta di contatto</p>
+	<h1>Hi admin</h1>
+	<p>you received a new request</p>
 
 	<h3>{{ $lead->name }}</h3>
 	<p>{{ $lead->email }}</p>
